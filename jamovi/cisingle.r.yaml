@@ -1,0 +1,11 @@
+---
+name:  ciSingle
+title: Confidence interval for a single sample
+jrs:   '1.1'
+
+items:
+    - name:  text
+      title: Confidence interval for a single sample
+      type:  Preformatted
+
+...

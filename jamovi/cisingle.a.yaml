@@ -1,0 +1,22 @@
+---
+name:  ciSingle
+title: Confidence interval for a single sample
+menuGroup: PUBH5018
+version: '1.0.0'
+jas: '1.2'
+
+options:
+    - name: data
+      type: Data
+
+    - name: dep
+      title: Dependent Variable
+      type: Variable
+
+    - name: ciWidth
+      title: Confidence level
+      type: Number
+      default: 95
+      min: 50
+      max: 99.99
+...
