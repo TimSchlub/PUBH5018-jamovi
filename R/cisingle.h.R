@@ -6,7 +6,8 @@ ciSingleOptions <- if (requireNamespace('jmvcore')) R6::R6Class(
     inherit = jmvcore::Options,
     public = list(
         initialize = function(
-            dep = NULL,
+            deps = NULL,
+            group = NULL,
             ciWidth = 95, ...) {
 
             super$initialize(
@@ -15,9 +16,12 @@ ciSingleOptions <- if (requireNamespace('jmvcore')) R6::R6Class(
                 requiresData=TRUE,
                 ...)
 
-            private$..dep <- jmvcore::OptionVariable$new(
-                "dep",
-                dep)
+            private$..deps <- jmvcore::OptionVariables$new(
+                "deps",
+                deps)
+            private$..group <- jmvcore::OptionVariable$new(
+                "group",
+                group)
             private$..ciWidth <- jmvcore::OptionNumber$new(
                 "ciWidth",
                 ciWidth,
@@ -25,32 +29,58 @@ ciSingleOptions <- if (requireNamespace('jmvcore')) R6::R6Class(
                 min=50,
                 max=99.99)
 
-            self$.addOption(private$..dep)
+            self$.addOption(private$..deps)
+            self$.addOption(private$..group)
             self$.addOption(private$..ciWidth)
         }),
     active = list(
-        dep = function() private$..dep$value,
+        deps = function() private$..deps$value,
+        group = function() private$..group$value,
         ciWidth = function() private$..ciWidth$value),
     private = list(
-        ..dep = NA,
+        ..deps = NA,
+        ..group = NA,
         ..ciWidth = NA)
 )
 
 ciSingleResults <- if (requireNamespace('jmvcore')) R6::R6Class(
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]]),
+        conflevel = function() private$.items[["conflevel"]],
+        citable = function() private$.items[["citable"]]),
     private = list(),
     public=list(
         initialize=function(options) {
             super$initialize(
                 options=options,
                 name="",
-                title="Confidence interval for a single sample")
+                title="Confidence interval for a mean")
             self$add(jmvcore::Preformatted$new(
                 options=options,
-                name="text",
-                title="Confidence interval for a single sample"))}))
+                name="conflevel",
+                title=""))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="citable",
+                title="Confidence interval for a mean",
+                rows="(deps)",
+                columns=list(
+                    list(
+                        `name`="var", 
+                        `title`="", 
+                        `type`="text"),
+                    list(
+                        `name`="mean", 
+                        `title`="Mean", 
+                        `type`="number"),
+                    list(
+                        `name`="lb", 
+                        `title`="Lower bound", 
+                        `type`="number"),
+                    list(
+                        `name`="ub", 
+                        `title`="Upper bound", 
+                        `type`="number"))))}))
 
 ciSingleBase <- if (requireNamespace('jmvcore')) R6::R6Class(
     "ciSingleBase",
@@ -71,35 +101,47 @@ ciSingleBase <- if (requireNamespace('jmvcore')) R6::R6Class(
                 completeWhenFilled = FALSE)
         }))
 
-#' Confidence interval for a single sample
+#' Confidence interval for a mean
 #'
 #' 
 #' @param data .
-#' @param dep .
+#' @param deps .
+#' @param group .
 #' @param ciWidth .
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
+#'   \code{results$conflevel} \tab \tab \tab \tab \tab a preformatted \cr
+#'   \code{results$citable} \tab \tab \tab \tab \tab a table \cr
 #' }
+#'
+#' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
+#'
+#' \code{results$citable$asDF}
+#'
+#' \code{as.data.frame(results$citable)}
 #'
 #' @export
 ciSingle <- function(
     data,
-    dep,
+    deps,
+    group,
     ciWidth = 95) {
 
     if ( ! requireNamespace('jmvcore'))
         stop('ciSingle requires jmvcore to be installed (restart may be required)')
 
-    if ( ! missing(dep)) dep <- jmvcore::resolveQuo(jmvcore::enquo(dep))
+    if ( ! missing(deps)) deps <- jmvcore::resolveQuo(jmvcore::enquo(deps))
+    if ( ! missing(group)) group <- jmvcore::resolveQuo(jmvcore::enquo(group))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
-            `if`( ! missing(dep), dep, NULL))
+            `if`( ! missing(deps), deps, NULL),
+            `if`( ! missing(group), group, NULL))
 
 
     options <- ciSingleOptions$new(
-        dep = dep,
+        deps = deps,
+        group = group,
         ciWidth = ciWidth)
 
     analysis <- ciSingleClass$new(

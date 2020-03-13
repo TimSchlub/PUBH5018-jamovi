@@ -1,6 +1,6 @@
 ---
 name:  ciSingle
-title: Confidence interval for a single sample
+title: Confidence interval for a mean
 menuGroup: PUBH5018
 version: '1.0.0'
 jas: '1.2'
@@ -9,8 +9,12 @@ options:
     - name: data
       type: Data
 
-    - name: dep
-      title: Dependent Variable
+    - name: deps
+      title: Dependent Variables
+      type: Variables
+
+    - name: group
+      title: Grouping Variables
       type: Variable
 
     - name: ciWidth
