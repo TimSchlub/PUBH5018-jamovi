@@ -3,7 +3,7 @@
 
 'use strict';
 
-const options = [{"name":"data","type":"Data"},{"name":"dep","title":"Dependent Variable","type":"Variable"},{"name":"ciWidth","title":"Confidence level","type":"Number","default":95,"min":50,"max":99.99}];
+const options = [{"name":"data","type":"Data"},{"name":"deps","title":"Dependent Variables","type":"Variables"},{"name":"group","title":"Grouping Variables","type":"Variable"},{"name":"ciWidth","title":"Confidence level","type":"Number","default":95,"min":50,"max":99.99}];
 
 const view = function() {
     
@@ -21,7 +21,7 @@ const view = function() {
 
 view.layout = ui.extend({
 
-    label: "Confidence interval for a single sample",
+    label: "Confidence interval for a mean",
     jus: "3.0",
     type: "root",
     stage: 0, //0 - release, 1 - development, 2 - proposed
@@ -35,12 +35,25 @@ view.layout = ui.extend({
 				{
 					type: DefaultControls.TargetLayoutBox,
 					typeName: 'TargetLayoutBox',
-					label: "Dependent Variable",
+					label: "Dependent Variables",
 					controls: [
 						{
 							type: DefaultControls.VariablesListBox,
 							typeName: 'VariablesListBox',
-							name: "dep",
+							name: "deps",
+							isTarget: true
+						}
+					]
+				},
+				{
+					type: DefaultControls.TargetLayoutBox,
+					typeName: 'TargetLayoutBox',
+					label: "Grouping Variables",
+					controls: [
+						{
+							type: DefaultControls.VariablesListBox,
+							typeName: 'VariablesListBox',
+							name: "group",
 							maxItemCount: 1,
 							isTarget: true
 						}

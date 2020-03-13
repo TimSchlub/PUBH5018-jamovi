@@ -17,11 +17,11 @@ analyses:
     ns: PUBH5018
     menuGroup: PUBH5018
     menuTitle: Checking data
-  - title: Confidence interval for a single sample
+  - title: Confidence interval for a mean
     name: ciSingle
     ns: PUBH5018
     menuGroup: PUBH5018
-    menuTitle: Confidence interval for a single sample
+    menuTitle: Confidence interval for a mean
 usesNative: true
 minApp: 1.0.8
 
