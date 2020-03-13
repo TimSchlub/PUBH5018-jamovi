@@ -1,0 +1,7 @@
+exportPattern("^[[:alpha:]]+")
+
+export(checkdataClass)
+export(checkdataOptions)
+
+export(ciSingleClass)
+export(ciSingleOptions)
