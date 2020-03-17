@@ -3,7 +3,7 @@
 
 'use strict';
 
-const options = [{"name":"data","type":"Data"},{"name":"deps","title":"Dependent Variables","type":"Variables"},{"name":"group","title":"Grouping Variables","type":"Variable"},{"name":"ciWidth","title":"Confidence level","type":"Number","default":95,"min":50,"max":99.99}];
+const options = [{"name":"data","type":"Data"},{"name":"deps","title":"Dependent Variables","type":"Variables"},{"name":"splitBy","title":"Split by","type":"Variable"},{"name":"ciWidth","title":"Confidence level","type":"Number","default":95,"min":50,"max":99.99}];
 
 const view = function() {
     
@@ -48,12 +48,12 @@ view.layout = ui.extend({
 				{
 					type: DefaultControls.TargetLayoutBox,
 					typeName: 'TargetLayoutBox',
-					label: "Grouping Variables",
+					label: "Split by",
 					controls: [
 						{
 							type: DefaultControls.VariablesListBox,
 							typeName: 'VariablesListBox',
-							name: "group",
+							name: "splitBy",
 							maxItemCount: 1,
 							isTarget: true
 						}

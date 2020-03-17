@@ -15,10 +15,10 @@ children:
             name: deps
             isTarget: true
       - type: TargetLayoutBox
-        label: Grouping Variables
+        label: Split by
         children:
           - type: VariablesListBox
-            name: group
+            name: splitBy
             maxItemCount: 1
             isTarget: true
   - type: LayoutBox

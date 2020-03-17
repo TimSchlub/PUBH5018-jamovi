@@ -7,7 +7,7 @@ ciSingleOptions <- if (requireNamespace('jmvcore')) R6::R6Class(
     public = list(
         initialize = function(
             deps = NULL,
-            group = NULL,
+            splitBy = NULL,
             ciWidth = 95, ...) {
 
             super$initialize(
@@ -19,9 +19,9 @@ ciSingleOptions <- if (requireNamespace('jmvcore')) R6::R6Class(
             private$..deps <- jmvcore::OptionVariables$new(
                 "deps",
                 deps)
-            private$..group <- jmvcore::OptionVariable$new(
-                "group",
-                group)
+            private$..splitBy <- jmvcore::OptionVariable$new(
+                "splitBy",
+                splitBy)
             private$..ciWidth <- jmvcore::OptionNumber$new(
                 "ciWidth",
                 ciWidth,
@@ -30,16 +30,16 @@ ciSingleOptions <- if (requireNamespace('jmvcore')) R6::R6Class(
                 max=99.99)
 
             self$.addOption(private$..deps)
-            self$.addOption(private$..group)
+            self$.addOption(private$..splitBy)
             self$.addOption(private$..ciWidth)
         }),
     active = list(
         deps = function() private$..deps$value,
-        group = function() private$..group$value,
+        splitBy = function() private$..splitBy$value,
         ciWidth = function() private$..ciWidth$value),
     private = list(
         ..deps = NA,
-        ..group = NA,
+        ..splitBy = NA,
         ..ciWidth = NA)
 )
 
@@ -106,7 +106,7 @@ ciSingleBase <- if (requireNamespace('jmvcore')) R6::R6Class(
 #' 
 #' @param data .
 #' @param deps .
-#' @param group .
+#' @param splitBy .
 #' @param ciWidth .
 #' @return A results object containing:
 #' \tabular{llllll}{
@@ -124,24 +124,24 @@ ciSingleBase <- if (requireNamespace('jmvcore')) R6::R6Class(
 ciSingle <- function(
     data,
     deps,
-    group,
+    splitBy,
     ciWidth = 95) {
 
     if ( ! requireNamespace('jmvcore'))
         stop('ciSingle requires jmvcore to be installed (restart may be required)')
 
     if ( ! missing(deps)) deps <- jmvcore::resolveQuo(jmvcore::enquo(deps))
-    if ( ! missing(group)) group <- jmvcore::resolveQuo(jmvcore::enquo(group))
+    if ( ! missing(splitBy)) splitBy <- jmvcore::resolveQuo(jmvcore::enquo(splitBy))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
             `if`( ! missing(deps), deps, NULL),
-            `if`( ! missing(group), group, NULL))
+            `if`( ! missing(splitBy), splitBy, NULL))
 
 
     options <- ciSingleOptions$new(
         deps = deps,
-        group = group,
+        splitBy = splitBy,
         ciWidth = ciWidth)
 
     analysis <- ciSingleClass$new(

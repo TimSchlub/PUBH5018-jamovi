@@ -11,9 +11,10 @@ ciSingleClass <- if (requireNamespace('jmvcore')) R6::R6Class(
             # `self$options` contains the options
             # `self$results` contains the results object (to populate)
             
-            group <- self$options$group
+            splitBy <- self$options$splitBy
             data <- self$data
-            data[[group]] <- as.factor(data[[group]])
+            splitByTrue <- !is.null(splitBy)
+            if (splitByTrue) data[[splitBy]] <- as.factor(data[[splitBy]])
           
             for (dep in self$options$deps) {
               # Do T-test
@@ -33,6 +34,28 @@ ciSingleClass <- if (requireNamespace('jmvcore')) R6::R6Class(
                 ,lb   = ttest$conf.int[1]
                 ,ub   = ttest$conf.int[2]
               ))
+              
+              if (splitByTrue) {
+                for (i in levels(data[[splitBy]])){
+                  # Do T-test
+                  x2 <- x[data[[splitBy]]==i]
+                  if (length(x2[which(!is.na(x2))]) > 1) {
+                    ttest <- t.test(x2, conf.level = ciLevel)
+                  } else {
+                    ttest <- NULL
+                    ttest$estimate <- "Not enough data"
+                    ttest$conf.int <- c("","")
+                  } 
+                  
+                  table$addRow(rowKey=paste0(dep,i), values=list(
+                    var   = paste0(dep," - ", i)
+                    ,mean = ttest$estimate
+                    ,lb   = ttest$conf.int[1]
+                    ,ub   = ttest$conf.int[2]
+                  ))
+                }
+              }
+              
             }
 
         })

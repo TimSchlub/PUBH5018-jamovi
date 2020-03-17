@@ -13,8 +13,8 @@ options:
       title: Dependent Variables
       type: Variables
 
-    - name: group
-      title: Grouping Variables
+    - name: splitBy
+      title: Split by
       type: Variable
 
     - name: ciWidth
