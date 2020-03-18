@@ -9,5 +9,5 @@ Description: More about what it does (maybe more than one line)
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
-Imports: jmvcore (>= 0.8.5), R6
-Built: R 3.6.1; ; 2020-03-17 21:12:15 UTC; windows
+Imports: jmvcore (>= 0.8.5), R6, ggplot2
+Built: R 3.6.1; ; 2020-03-18 04:04:24 UTC; windows
