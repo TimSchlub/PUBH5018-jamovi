@@ -22,6 +22,11 @@ analyses:
     ns: PUBH5018
     menuGroup: PUBH5018
     menuTitle: Confidence interval for a mean
+  - title: Histogram
+    name: histogram
+    ns: PUBH5018
+    menuGroup: PUBH5018
+    menuTitle: Histogram
 usesNative: true
 minApp: 1.0.8
 

@@ -1,7 +1,10 @@
 exportPattern("^[[:alpha:]]+")
-
+import(ggplot2)
 export(checkdataClass)
 export(checkdataOptions)
 
 export(ciSingleClass)
 export(ciSingleOptions)
+
+export(histogramClass)
+export(histogramOptions)
