@@ -18,10 +18,18 @@ ciSingleOptions <- if (requireNamespace('jmvcore')) R6::R6Class(
 
             private$..deps <- jmvcore::OptionVariables$new(
                 "deps",
-                deps)
+                deps,
+                suggested=list(
+                    "continuous"),
+                permitted=list(
+                    "numeric"))
             private$..splitBy <- jmvcore::OptionVariable$new(
                 "splitBy",
-                splitBy)
+                splitBy,
+                suggested=list(
+                    "nominal"),
+                permitted=list(
+                    "factor"))
             private$..ciWidth <- jmvcore::OptionNumber$new(
                 "ciWidth",
                 ciWidth,
@@ -138,6 +146,7 @@ ciSingle <- function(
             `if`( ! missing(deps), deps, NULL),
             `if`( ! missing(splitBy), splitBy, NULL))
 
+    for (v in splitBy) if (v %in% names(data)) data[[v]] <- as.factor(data[[v]])
 
     options <- ciSingleOptions$new(
         deps = deps,

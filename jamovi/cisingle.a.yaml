@@ -12,10 +12,18 @@ options:
     - name: deps
       title: Dependent Variables
       type: Variables
+      suggested:
+        - continuous
+      permitted:
+        - numeric
 
     - name: splitBy
       title: Split by
       type: Variable
+      suggested:
+        - nominal
+      permitted:
+        - factor
 
     - name: ciWidth
       title: Confidence level

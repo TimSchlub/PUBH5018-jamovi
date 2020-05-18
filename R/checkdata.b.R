@@ -12,6 +12,9 @@ checkdataClass <- if (requireNamespace('jmvcore')) R6::R6Class(
             # `self$results` contains the results object (to populate)
 
             variable <- self$options$dep
+            
+            if (is.null(variable)) return()
+            
             variable <- self$data[,variable]
             variable <- data.frame(variable=variable,nms = 1:length(variable))
             n <- 5

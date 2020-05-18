@@ -3,7 +3,7 @@
 
 'use strict';
 
-const options = [{"name":"data","type":"Data"},{"name":"deps","title":"Dependent Variables","type":"Variables"},{"name":"splitBy","title":"Split by","type":"Variable"},{"name":"ciWidth","title":"Confidence level","type":"Number","default":95,"min":50,"max":99.99}];
+const options = [{"name":"data","type":"Data"},{"name":"deps","title":"Dependent Variables","type":"Variables","suggested":["continuous"],"permitted":["numeric"]},{"name":"splitBy","title":"Split by","type":"Variable","suggested":["nominal"],"permitted":["factor"]},{"name":"ciWidth","title":"Confidence level","type":"Number","default":95,"min":50,"max":99.99}];
 
 const view = function() {
     
